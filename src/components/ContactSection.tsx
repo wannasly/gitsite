@@ -31,9 +31,15 @@ export default function ContactSection({ lang }: ContactSectionProps) {
 
   const handleCopyDiscord = (e: React.MouseEvent) => {
     e.preventDefault();
-    navigator.clipboard.writeText('@wannsly');
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText('@wannsly');
+      }
+    } catch (err) {
+      console.warn('Clipboard copy failed:', err);
+    }
     setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   const t = {
@@ -97,7 +103,6 @@ export default function ContactSection({ lang }: ContactSectionProps) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {socials.map((social) => {
             const cardProps = {
-              key: social.name,
               className: `p-6 rounded-2xl border text-left flex flex-col justify-between h-[150px] outline-none min-h-[44px] cursor-pointer bg-cyber-card/60 border-white/5 text-cyber-muted hover:bg-white hover:text-black hover:border-white transition-all duration-300 focus:ring-2 focus:ring-cyber-accent focus:ring-offset-2 focus:ring-offset-cyber-bg`,
               "aria-label": `Connect via ${social.name}`,
               initial: { opacity: 0, y: 30 },
@@ -113,6 +118,7 @@ export default function ContactSection({ lang }: ContactSectionProps) {
             if (social.onClick) {
               return (
                 <motion.button 
+                  key={social.name}
                   {...cardProps}
                   onClick={social.onClick}
                 >
@@ -132,6 +138,7 @@ export default function ContactSection({ lang }: ContactSectionProps) {
 
             return (
               <motion.a 
+                key={social.name}
                 {...cardProps}
                 href={social.url}
                 target="_blank"

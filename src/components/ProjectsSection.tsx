@@ -27,7 +27,7 @@ export default function ProjectsSection({ lang }: ProjectsSectionProps) {
       proj2Title: 'Stealth Network Security Scanner',
       proj2Desc: 'Низкоуровневая консольная утилита и бэкенд на C++ и Python для сканирования уязвимостей в корпоративных сетях. Интегрирована с API Nmap и Bettercap, автоматически выявляет критические бреши безопасности и генерирует отчеты в шифрованном виде.',
       proj3Title: 'Discord Core Engine & Logistics',
-      proj3Desc: 'Архитектура для масштабируемых Discord-ботов следующего поколения на TypeScript. Включает кастомную отказоустойчивую систему изоляции .env переменных, выделенный логгер сессий, обработчик критических ошибок выполнения и кастомные модули модерации трибун (voice stages).',
+      proj3Desc: 'Архитектура для масштабируемых Discord-ботов на TypeScript. Интегрирована продвинутая система модерации и администрирования серверов. Реализована кастомная структура .env файла, где динамически хранятся и распределяются переменные для различных каналов: раздельные каналы для записи, выделенные потоки для логов использования команд и отдельный глобальный обработчик, выводящий абсолютно все системные ошибки.',
     },
     en: {
       sub: 'SYSTEM_DIRECTORY // REPOS',
@@ -38,7 +38,7 @@ export default function ProjectsSection({ lang }: ProjectsSectionProps) {
       proj2Title: 'Stealth Network Security Scanner',
       proj2Desc: 'Low-level console utility and backend in C++ and Python for scanning corporate network vulnerabilities. Integrated with Nmap and Bettercap APIs, automatically identifying critical security flaws and generating encrypted reports.',
       proj3Title: 'Discord Core Engine & Logistics',
-      proj3Desc: 'Next-generation architecture for scalable Discord bots in TypeScript. Features a custom fault-tolerant env-variable isolation system, dedicated session logging, runtime crash handler, and custom voice stage moderation modules.',
+      proj3Desc: 'Scalable TypeScript architecture for Discord bots featuring advanced moderation and administration systems. Built with a custom .env infrastructure for dynamic routing: separated variables for recording channels, dedicated streams for command usage logs, and a global error handler that catches and outputs all system-level exceptions.',
     }
   }[lang];
 
