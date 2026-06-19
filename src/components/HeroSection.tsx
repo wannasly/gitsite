@@ -158,9 +158,7 @@ export default function HeroSection({ lang }: HeroSectionProps) {
             className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-none"
           >
             {t.title1} <br className="hidden sm:inline" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyber-accent to-cyber-cyan drop-shadow-[0_0_15px_rgba(0,255,102,0.2)]">
-              {t.title2}
-            </span> {t.title3}
+            <span className="text-cyber-accent">{" "}{t.title2}{" "}</span> {t.title3}
           </motion.h1>
 
           <motion.p
