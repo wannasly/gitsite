@@ -125,27 +125,27 @@ export default function HeroSection({ lang }: HeroSectionProps) {
   } as const;
 
   return (
-    <section 
-      id="hero" 
+    <section
+      id="hero"
       className="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden cyber-grid-bg"
     >
       {/* Background Radial Glow */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyber-accent/5 rounded-full blur-[120px] pointer-events-none"></div>
-      <div className="absolute bottom-10 right-10 w-[300px] h-[300px] bg-cyber-cyan/5 rounded-full blur-[80px] pointer-events-none"></div>
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyber-accent/5 rounded-full blur-[50px] pointer-events-none"></div>
+      <div className="absolute bottom-10 right-10 w-[300px] h-[300px] bg-cyber-cyan/5 rounded-full blur-[20px] pointer-events-none"></div>
 
       {/* Cyberpunk Scanline Effect overlay */}
       <div className="absolute inset-0 pointer-events-none opacity-20 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[size:100%_4px,6px_100%]"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-        
+
         {/* Left Side Info */}
-        <motion.div 
+        <motion.div
           className="lg:col-span-7 text-left space-y-6"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
-          <motion.div 
+          <motion.div
             variants={itemVariants}
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyber-accent/10 border border-cyber-accent/20 text-cyber-accent font-mono text-xs animate-pulse"
           >
@@ -153,7 +153,7 @@ export default function HeroSection({ lang }: HeroSectionProps) {
             <span>{t.status}</span>
           </motion.div>
 
-          <motion.h1 
+          <motion.h1
             variants={itemVariants}
             className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-none"
           >
@@ -163,7 +163,7 @@ export default function HeroSection({ lang }: HeroSectionProps) {
             </span> {t.title3}
           </motion.h1>
 
-          <motion.p 
+          <motion.p
             variants={itemVariants}
             className="text-cyber-muted text-base sm:text-lg max-w-xl font-sans leading-relaxed"
           >
@@ -171,7 +171,7 @@ export default function HeroSection({ lang }: HeroSectionProps) {
           </motion.p>
 
           {/* Quick Metrics / Badges */}
-          <motion.div 
+          <motion.div
             variants={itemVariants}
             className="grid grid-cols-3 gap-4 pt-4 max-w-md font-mono"
           >
@@ -190,7 +190,7 @@ export default function HeroSection({ lang }: HeroSectionProps) {
           </motion.div>
 
           {/* CTAs */}
-          <motion.div 
+          <motion.div
             variants={itemVariants}
             className="flex flex-wrap gap-4 pt-2"
           >
@@ -211,7 +211,7 @@ export default function HeroSection({ lang }: HeroSectionProps) {
         </motion.div>
 
         {/* Right Side Visual (Mock Interactive Terminal) */}
-        <motion.div 
+        <motion.div
           className="lg:col-span-5 w-full"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -234,7 +234,7 @@ export default function HeroSection({ lang }: HeroSectionProps) {
               <div className="text-cyber-muted font-mono">
                 Last login: Fri Jun 19 21:24:47 on console
               </div>
-              
+
               <div className="space-y-1">
                 <p className="text-white">
                   <span className="text-cyber-accent">wannasly@matrix:~$</span> {line1Text}
@@ -243,7 +243,7 @@ export default function HeroSection({ lang }: HeroSectionProps) {
                   )}
                 </p>
                 {showJson && (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.3 }}
@@ -266,7 +266,7 @@ export default function HeroSection({ lang }: HeroSectionProps) {
                       <span className="inline-block w-1.5 h-3.5 bg-cyber-accent animate-[pulse_1s_infinite] align-middle ml-1"></span>
                     )}
                   </p>
-                  
+
                   {diagnosticsStep >= 1 && (
                     <p className="text-cyber-accent font-bold animate-pulse">{t.log1}</p>
                   )}
@@ -283,7 +283,7 @@ export default function HeroSection({ lang }: HeroSectionProps) {
               )}
 
               {diagnosticsStep >= 4 && (
-                <motion.p 
+                <motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   className="text-white"
