@@ -1,7 +1,11 @@
+import { useState } from 'react';
 import { Mail, ArrowUpRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-// Custom SVG Icons fetched from MCP Logo Search
+interface ContactSectionProps {
+  lang: 'ru' | 'en';
+}
+
 const TelegramIcon: React.FC<{ className?: string }> = ({ className }) => (
   <svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" className={className} fill="currentColor">
     <path d="M57.94 126.648c37.32-16.256 62.2-26.974 74.64-32.152 35.56-14.786 42.94-17.354 47.76-17.441 1.06-.017 3.42.245 4.96 1.49 1.28 1.05 1.64 2.47 1.82 3.467.16.996.38 3.266.2 5.038-1.92 20.24-10.26 69.356-14.5 92.026-1.78 9.592-5.32 12.808-8.74 13.122-7.44.684-13.08-4.912-20.28-9.63-11.26-7.386-17.62-11.982-28.56-19.188-12.64-8.328-4.44-12.906 2.76-20.386 1.88-1.958 34.64-31.748 35.26-34.45.08-.338.16-1.598-.6-2.262-.74-.666-1.84-.438-2.64-.258-1.14.256-19.12 12.152-54 35.686-5.1 3.508-9.72 5.218-13.88 5.128-4.56-.098-13.36-2.584-19.9-4.708-8-2.606-14.38-3.984-13.82-8.41.28-2.304 3.46-4.662 9.52-7.072Z" />
@@ -14,60 +18,59 @@ const DiscordIcon: React.FC<{ className?: string }> = ({ className }) => (
   </svg>
 );
 
-const GithubIcon: React.FC<{ className?: string }> = ({ className }) => (
-  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-    <path d="M9 18c-4.51 2-5-2-7-2" />
-  </svg>
-);
-
 interface SocialLink {
   name: string;
   value: string;
-  url: string;
+  url?: string;
+  onClick?: (e: React.MouseEvent) => void;
   icon: React.ReactNode;
-  colorClass: string;
-  hoverBorderColor: string;
-  hoverGlowColor: string;
 }
 
-export default function ContactSection() {
+export default function ContactSection({ lang }: ContactSectionProps) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyDiscord = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigator.clipboard.writeText('@wannsly');
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  };
+
+  const t = {
+    ru: {
+      sub: 'СИСТЕМНЫЙ_ВЫХОД // ШИФРОВАНИЕ',
+      title: 'Связаться',
+      footer: '© 2026 $WANNASLY — СИСТЕМЫ СТАТУС: ОПЕРАЦИОННО // LEVEL: 0x01',
+      enc: 'РЕЖИМ ШИФРОВАНИЯ: AES-256',
+      copied: 'СКОПИРОВАНО!',
+    },
+    en: {
+      sub: 'SYSTEM_OUTBOX // ENCRYPTED',
+      title: 'Establish Contact',
+      footer: '© 2026 $WANNASLY — SYSTEM STATUS: OPERATIONAL // LEVEL: 0x01',
+      enc: 'ENCRYPTION_MODE: AES-256',
+      copied: 'COPIED!',
+    }
+  }[lang];
+
   const socials: SocialLink[] = [
     {
       name: 'TELEGRAM',
-      value: '@ayaeb',
-      url: 'https://t.me/ayaeb',
+      value: '@wannasly',
+      url: 'https://t.me/wannasly',
       icon: <TelegramIcon className="w-5 h-5" />,
-      colorClass: 'text-cyber-cyan border-cyber-cyan/15 bg-cyber-cyan/5 hover:text-cyber-cyan',
-      hoverBorderColor: 'rgba(0, 240, 255, 0.4)',
-      hoverGlowColor: '0 10px 30px -10px rgba(0, 240, 255, 0.15)',
-    },
-    {
-      name: 'GITHUB',
-      value: 'github.com/ayaeb',
-      url: 'https://github.com/ayaeb',
-      icon: <GithubIcon className="w-5 h-5" />,
-      colorClass: 'text-cyber-accent border-cyber-accent/15 bg-cyber-accent/5 hover:text-cyber-accent',
-      hoverBorderColor: 'rgba(0, 255, 102, 0.4)',
-      hoverGlowColor: '0 10px 30px -10px rgba(0, 255, 102, 0.15)',
     },
     {
       name: 'DISCORD',
-      value: 'ayaeb',
-      url: 'https://discord.com',
+      value: copied ? t.copied : '@wannsly',
+      onClick: handleCopyDiscord,
       icon: <DiscordIcon className="w-5 h-5" />,
-      colorClass: 'text-cyber-magenta border-cyber-magenta/15 bg-cyber-magenta/5 hover:text-cyber-magenta',
-      hoverBorderColor: 'rgba(255, 0, 127, 0.4)',
-      hoverGlowColor: '0 10px 30px -10px rgba(255, 0, 127, 0.15)',
     },
     {
       name: 'EMAIL',
-      value: 'ayaeb@pm.me',
-      url: 'mailto:ayaeb@pm.me',
-      icon: <Mail className="w-5 h-5" />,
-      colorClass: 'text-white border-white/10 bg-white/5 hover:text-white',
-      hoverBorderColor: 'rgba(255, 255, 255, 0.3)',
-      hoverGlowColor: '0 10px 30px -10px rgba(255, 255, 255, 0.1)',
+      value: 'wannaslyy@gmail.com',
+      url: 'mailto:wannaslyy@gmail.com',
+      icon: <Mail className="w-5 h-5 animate-pulse" />,
     },
   ];
 
@@ -82,58 +85,81 @@ export default function ContactSection() {
         <div className="text-left mb-16 space-y-2">
           <div className="flex items-center gap-2 font-mono text-xs text-cyber-accent">
             <span className="w-1.5 h-1.5 rounded-full bg-cyber-accent animate-ping"></span>
-            <span>SYSTEM_OUTBOX // ENCRYPTED</span>
+            <span>{t.sub}</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            Establish Contact
+            {t.title}
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-cyber-accent to-transparent"></div>
         </div>
 
         {/* Social Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {socials.map((social) => (
-            <motion.a 
-              key={social.name}
-              href={social.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`p-6 rounded-2xl border text-left flex flex-col justify-between h-[150px] ${social.colorClass} outline-none focus:ring-2 focus:ring-cyber-accent focus:ring-offset-2 focus:ring-offset-cyber-bg min-h-[44px]`}
-              aria-label={`Connect via ${social.name}`}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              whileHover={{ 
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {socials.map((social) => {
+            const cardProps = {
+              key: social.name,
+              className: `p-6 rounded-2xl border text-left flex flex-col justify-between h-[150px] outline-none min-h-[44px] cursor-pointer bg-cyber-card/60 border-white/5 text-cyber-muted hover:bg-white hover:text-black hover:border-white transition-all duration-300 focus:ring-2 focus:ring-cyber-accent focus:ring-offset-2 focus:ring-offset-cyber-bg`,
+              "aria-label": `Connect via ${social.name}`,
+              initial: { opacity: 0, y: 30 },
+              whileInView: { opacity: 1, y: 0 },
+              viewport: { once: true, margin: "-50px" },
+              whileHover: { 
                 y: -4, 
                 scale: 1.03,
-                borderColor: social.hoverBorderColor,
-                boxShadow: social.hoverGlowColor
-              }}
-              transition={{ duration: 0.25, ease: "easeOut" }}
-            >
-              <div className="flex justify-between items-center w-full">
-                <div className="p-2.5 rounded-xl bg-white/5 border border-white/5">
-                  {social.icon}
-                </div>
-                <ArrowUpRight className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-opacity" />
-              </div>
+              },
+              transition: { duration: 0.25, ease: "easeOut" as const }
+            };
 
-              <div>
-                <div className="font-mono text-[10px] tracking-widest opacity-60 mb-0.5">{social.name}</div>
-                <div className="font-mono text-sm font-bold tracking-tight">{social.value}</div>
-              </div>
-            </motion.a>
-          ))}
+            if (social.onClick) {
+              return (
+                <motion.button 
+                  {...cardProps}
+                  onClick={social.onClick}
+                >
+                  <div className="flex justify-between items-center w-full">
+                    <div className="p-2.5 rounded-xl bg-white/5 border border-white/5">
+                      {social.icon}
+                    </div>
+                    <ArrowUpRight className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                  <div>
+                    <div className="font-mono text-[10px] tracking-widest opacity-60 mb-0.5">{social.name}</div>
+                    <div className="font-mono text-sm font-bold tracking-tight">{social.value}</div>
+                  </div>
+                </motion.button>
+              );
+            }
+
+            return (
+              <motion.a 
+                {...cardProps}
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="flex justify-between items-center w-full">
+                  <div className="p-2.5 rounded-xl bg-white/5 border border-white/5">
+                    {social.icon}
+                  </div>
+                  <ArrowUpRight className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-opacity" />
+                </div>
+                <div>
+                  <div className="font-mono text-[10px] tracking-widest opacity-60 mb-0.5">{social.name}</div>
+                  <div className="font-mono text-sm font-bold tracking-tight">{social.value}</div>
+                </div>
+              </motion.a>
+            );
+          })}
         </div>
 
         {/* Footer info */}
         <div className="mt-20 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-xs font-mono text-cyber-muted gap-4">
           <div>
-            &copy; 2026 AYAEB. ALL RIGHTS SECURED.
+            {t.footer}
           </div>
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-cyber-accent animate-pulse"></span>
-            <span>ENCRYPTION_MODE: AES-256</span>
+            <span>{t.enc}</span>
           </div>
         </div>
 

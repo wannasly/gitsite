@@ -2,25 +2,36 @@ import { useState, useEffect } from 'react';
 import { Terminal, ArrowRight, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-export default function HeroSection() {
+interface HeroSectionProps {
+  lang: 'ru' | 'en';
+}
+
+export default function HeroSection({ lang }: HeroSectionProps) {
   const [line1Text, setLine1Text] = useState('');
   const [showJson, setShowJson] = useState(false);
   const [line2Text, setLine2Text] = useState('');
   const [diagnosticsStep, setDiagnosticsStep] = useState(0);
 
+  // Typewriter effect sequence
   useEffect(() => {
     let isCancelled = false;
     const command1 = 'cat info.json';
-    const command2 = 'run-diagnostics --verbose';
+    const command2 = 'un-diagnostics --verbose';
 
     const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
     const runSequence = async () => {
+      // Clear previous states on mount/reset
+      setLine1Text('');
+      setShowJson(false);
+      setLine2Text('');
+      setDiagnosticsStep(0);
+
       // Step 1: Type command 1
       for (let i = 0; i <= command1.length; i++) {
         if (isCancelled) return;
         setLine1Text(command1.slice(0, i));
-        await sleep(60);
+        await sleep(65);
       }
 
       if (isCancelled) return;
@@ -34,7 +45,7 @@ export default function HeroSection() {
       for (let j = 0; j <= command2.length; j++) {
         if (isCancelled) return;
         setLine2Text(command2.slice(0, j));
-        await sleep(50);
+        await sleep(55);
       }
 
       const steps = [1, 2, 3, 4];
@@ -51,6 +62,47 @@ export default function HeroSection() {
       isCancelled = true;
     };
   }, []);
+
+  const t = {
+    ru: {
+      status: 'БЕЗОПАСНОЕ ПОДКЛЮЧЕНИЕ УСТАНОВЛЕНО',
+      title1: 'Разработка систем',
+      title2: 'автоматизации & Web3',
+      title3: 'решений',
+      subtitle: 'Специализируюсь на высокопроизводительной автоматизации, безопасных парсерах, скриптах для смарт-контрактов, движках для Discord и кастомных ИИ-агентах. Создаю строгие бэкенд-утилиты скрытого действия и премиальные интерфейсы.',
+      metric1Val: '99.9%',
+      metric1Lbl: 'Автоматизация 24/7',
+      metric2Val: '30+',
+      metric2Lbl: 'Скрипты и инструменты',
+      metric3Val: '100%',
+      metric3Lbl: 'Скрытый режим',
+      cta1: 'ИНИЦИАЛИЗАЦИЯ',
+      cta2: 'СВЯЗАТЬСЯ',
+      log1: '> Запуск предпусковой проверки...',
+      log2: '> Подключение к сети: Стабильно',
+      log3: '> Безопасный туннель: Активен. Брандмауэр настроен.',
+      log4: '> Статус: ГОТОВ К РАЗВЕРТЫВАНИЮ',
+    },
+    en: {
+      status: 'SECURE SYSTEM CONNECTION ESTABLISHED',
+      title1: 'Building Automated',
+      title2: 'Systems & Web3',
+      title3: 'Solutions',
+      subtitle: 'Specializing in high-performance automation, secure parsers, smart contract scripts, Discord engines, and custom AI agents. Creating stealth-mode backend utilities and premium interfaces.',
+      metric1Val: '99.9%',
+      metric1Lbl: 'Uptime Automation',
+      metric2Val: '30+',
+      metric2Lbl: 'Scripts & Tools',
+      metric3Val: '100%',
+      metric3Lbl: 'Stealth Mode',
+      cta1: 'INITIALIZE_VIEW',
+      cta2: 'ESTABLISH_CONTACT',
+      log1: '> Initializing systems scan...',
+      log2: '> Network connection: Operational',
+      log3: '> Secure tunneling active. Firewall configured.',
+      log4: '> Status: READY TO BUILD',
+    }
+  }[lang];
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -98,24 +150,24 @@ export default function HeroSection() {
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyber-accent/10 border border-cyber-accent/20 text-cyber-accent font-mono text-xs animate-pulse"
           >
             <ShieldCheck className="w-3.5 h-3.5" />
-            <span>SECURE SYSTEM CONNECTION ESTABLISHED</span>
+            <span>{t.status}</span>
           </motion.div>
 
           <motion.h1 
             variants={itemVariants}
             className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-none"
           >
-            Building Automated <br className="hidden sm:inline" />
+            {t.title1} <br className="hidden sm:inline" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyber-accent to-cyber-cyan cyber-glow-green">
-              Systems & Web3
-            </span> Solutions
+              {t.title2}
+            </span> {t.title3}
           </motion.h1>
 
           <motion.p 
             variants={itemVariants}
             className="text-cyber-muted text-base sm:text-lg max-w-xl font-sans leading-relaxed"
           >
-            Specializing in high-performance automation, secure parsers, smart contract scripts, Discord engines, and custom AI tooling. Developing sleek frontends backed by rock-solid architecture.
+            {t.subtitle}
           </motion.p>
 
           {/* Quick Metrics / Badges */}
@@ -124,16 +176,16 @@ export default function HeroSection() {
             className="grid grid-cols-3 gap-4 pt-4 max-w-md font-mono"
           >
             <div className="border border-white/5 bg-cyber-card/40 p-3 rounded-lg">
-              <div className="text-xl font-bold text-cyber-accent">99.9%</div>
-              <div className="text-[10px] text-cyber-muted uppercase tracking-wider">Uptime Automation</div>
+              <div className="text-xl font-bold text-cyber-accent">{t.metric1Val}</div>
+              <div className="text-[10px] text-cyber-muted uppercase tracking-wider">{t.metric1Lbl}</div>
             </div>
             <div className="border border-white/5 bg-cyber-card/40 p-3 rounded-lg">
-              <div className="text-xl font-bold text-cyber-cyan">30+</div>
-              <div className="text-[10px] text-cyber-muted uppercase tracking-wider">Scripts & Tools</div>
+              <div className="text-xl font-bold text-cyber-cyan">{t.metric2Val}</div>
+              <div className="text-[10px] text-cyber-muted uppercase tracking-wider">{t.metric2Lbl}</div>
             </div>
             <div className="border border-white/5 bg-cyber-card/40 p-3 rounded-lg">
-              <div className="text-xl font-bold text-cyber-text">100%</div>
-              <div className="text-[10px] text-cyber-muted uppercase tracking-wider">Stealth Mode</div>
+              <div className="text-xl font-bold text-cyber-text">{t.metric3Val}</div>
+              <div className="text-[10px] text-cyber-muted uppercase tracking-wider">{t.metric3Lbl}</div>
             </div>
           </motion.div>
 
@@ -146,14 +198,14 @@ export default function HeroSection() {
               href="#projects"
               className="inline-flex items-center justify-center px-6 py-3.5 rounded-lg bg-cyber-accent text-cyber-bg font-mono font-bold text-sm transition-all duration-200 hover:bg-cyber-accent/90 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(0,255,102,0.4)] touch-target-min min-w-[140px]"
             >
-              INITIALIZE_VIEW
+              {t.cta1}
               <ArrowRight className="w-4 h-4 ml-2" />
             </a>
             <a
               href="#contact"
               className="inline-flex items-center justify-center px-6 py-3.5 rounded-lg border border-white/10 hover:border-cyber-cyan/40 bg-white/5 text-white font-mono text-sm transition-all duration-200 hover:scale-[1.02] hover:bg-white/10 touch-target-min min-w-[140px]"
             >
-              ESTABLISH_CONTACT
+              {t.cta2}
             </a>
           </motion.div>
         </motion.div>
@@ -173,19 +225,19 @@ export default function HeroSection() {
                 <span className="w-3 h-3 rounded-full bg-yellow-500/80"></span>
                 <span className="w-3 h-3 rounded-full bg-green-500/80"></span>
               </div>
-              <span className="font-mono text-[10px] text-cyber-muted tracking-wider">sh --session=ayaeb@matrix</span>
+              <span className="font-mono text-[10px] text-cyber-muted tracking-wider">sh --session=wannasly@matrix</span>
               <Terminal className="w-3.5 h-3.5 text-cyber-accent" />
             </div>
 
             {/* Terminal Body */}
             <div className="p-6 font-mono text-xs sm:text-sm text-left space-y-4 h-[300px] overflow-y-auto">
-              <div className="text-cyber-muted">
+              <div className="text-cyber-muted font-mono">
                 Last login: Fri Jun 19 21:24:47 on console
               </div>
               
               <div className="space-y-1">
                 <p className="text-white">
-                  <span className="text-cyber-accent">ayaeb@matrix:~$</span> {line1Text}
+                  <span className="text-cyber-accent">wannasly@matrix:~$</span> {line1Text}
                   {!showJson && (
                     <span className="inline-block w-1.5 h-3.5 bg-cyber-accent animate-[pulse_1s_infinite] align-middle ml-1"></span>
                   )}
@@ -200,7 +252,6 @@ export default function HeroSection() {
                     {"{"} <br />
                     &nbsp;&nbsp;&quot;status&quot;: &quot;building_the_future&quot;,<br />
                     &nbsp;&nbsp;&quot;languages&quot;: [&quot;Python&quot;, &quot;TypeScript&quot;, &quot;C++&quot;],<br />
-                    &nbsp;&nbsp;&quot;tools&quot;: [&quot;AI agents&quot;, &quot;Kali&quot;, &quot;Vite&quot;],<br />
                     &nbsp;&nbsp;&quot;focus&quot;: [&quot;Web3&quot;, &quot;Automation&quot;, &quot;Security&quot;]<br />
                     {"}"}
                   </motion.div>
@@ -210,23 +261,23 @@ export default function HeroSection() {
               {showJson && (
                 <div className="space-y-1">
                   <p className="text-white">
-                    <span className="text-cyber-accent">ayaeb@matrix:~$</span> {line2Text}
+                    <span className="text-cyber-accent">wannasly@matrix:~$</span> {line2Text}
                     {showJson && diagnosticsStep === 0 && (
                       <span className="inline-block w-1.5 h-3.5 bg-cyber-accent animate-[pulse_1s_infinite] align-middle ml-1"></span>
                     )}
                   </p>
                   
                   {diagnosticsStep >= 1 && (
-                    <p className="text-cyber-accent font-bold animate-pulse">&gt; Initializing systems scan...</p>
+                    <p className="text-cyber-accent font-bold animate-pulse">{t.log1}</p>
                   )}
                   {diagnosticsStep >= 2 && (
-                    <p className="text-cyber-cyan">&gt; Network connection: Operational</p>
+                    <p className="text-cyber-cyan">{t.log2}</p>
                   )}
                   {diagnosticsStep >= 3 && (
-                    <p className="text-cyber-accent">&gt; Secure tunneling active. Firewall configured.</p>
+                    <p className="text-cyber-accent">{t.log3}</p>
                   )}
                   {diagnosticsStep >= 4 && (
-                    <p className="text-emerald-400">&gt; Status: READY TO BUILD</p>
+                    <p className="text-emerald-400 font-bold">{t.log4}</p>
                   )}
                 </div>
               )}
@@ -237,7 +288,7 @@ export default function HeroSection() {
                   animate={{ opacity: 1 }}
                   className="text-white"
                 >
-                  <span className="text-cyber-accent">ayaeb@matrix:~$</span>
+                  <span className="text-cyber-accent">wannasly@matrix:~$</span>
                   <span className="inline-block w-1.5 h-3.5 bg-cyber-accent animate-[pulse_1s_infinite] align-middle ml-1"></span>
                 </motion.p>
               )}
