@@ -1,39 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Permanent+Marker&display=swap');
+/* All families below ship a Cyrillic subset — required, the site is bilingual RU/EN. */
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500;700;900&family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;900&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,700&family=Oswald:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&display=swap');
 
 @import "tailwindcss";
 
 @theme {
-  /* ---- FRZN glacial palette (cold steel blue, monochrome) ----
-     base/deep darkened so solid frost-white body text clears WCAG AA 4.5:1 */
-  --color-frost-base: #59697a;   /* main steel blue background (white text ~5.2:1) */
-  --color-frost-deep: #46545f;   /* darker panel / sections */
-  --color-frost-mist: #8598a6;   /* lighter band — decorative / mountain sky only */
-  --color-frost-card: #aebdc8;   /* light blue product tile */
-  --color-frost-snow: #dde2e4;   /* near-white tile */
-  --color-frost-ink: #12191f;    /* near-black slate (text on light) */
-  --color-frost-white: #f2f5f6;  /* primary text */
-  --color-frost-line: rgba(242, 245, 246, 0.18);
-
-  --font-display: 'Oswald', 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  /* Font families — variants pick whichever fits their design language */
+  --font-unbounded: 'Unbounded', ui-sans-serif, system-ui, sans-serif;
+  --font-manrope: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+  --font-inter: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-playfair: 'Playfair Display', ui-serif, Georgia, serif;
+  --font-oswald: 'Oswald', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
-  --font-tag: 'Permanent Marker', cursive;
 
+  /* Shared motion primitives */
   --animate-marquee: marquee 34s linear infinite;
-  --animate-marquee-rev: marquee-rev 40s linear infinite;
+  --animate-marquee-slow: marquee 60s linear infinite;
   --animate-blink: blink 1.1s step-end infinite;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-spin-slow: spin 22s linear infinite;
 
   @keyframes marquee {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
   }
-  @keyframes marquee-rev {
-    from { transform: translateX(-50%); }
-    to { transform: translateX(0); }
-  }
   @keyframes blink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-14px); }
   }
 }
 
@@ -43,138 +39,44 @@
   }
 
   body {
-    background-color: var(--color-frost-base);
-    color: var(--color-frost-white);
-    font-family: var(--font-sans);
     margin: 0;
     overflow-x: hidden;
+    font-family: var(--font-manrope);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
 
-  ::selection {
-    background: var(--color-frost-white);
-    color: var(--color-frost-ink);
-  }
-
   :focus-visible {
-    outline: 2px solid var(--color-frost-white);
+    outline: 2px solid currentColor;
     outline-offset: 3px;
   }
 }
 
-/* ============ TEXTURE & DECOR ============ */
-
-/* Film grain over the whole page */
-.grain::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 90;
-  pointer-events: none;
-  opacity: 0.06;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-/* Puffer-jacket quilted padding texture. Tint via --quilt-tint */
-.quilt {
-  position: relative;
-  background-color: var(--quilt-tint, #9fb0bd);
-  background-image:
-    repeating-linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.20) 0px,
-      rgba(255, 255, 255, 0.05) 12px,
-      rgba(0, 0, 0, 0.05) 30px,
-      rgba(0, 0, 0, 0.16) 44px,
-      rgba(0, 0, 0, 0.04) 52px,
-      rgba(255, 255, 255, 0.20) 58px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent 0px,
-      transparent 84px,
-      rgba(0, 0, 0, 0.05) 85px,
-      rgba(0, 0, 0, 0.05) 86px
-    );
-  background-size: 100% 58px, 100% 100%;
-}
-
-/* Soft top-lit vignette for tiles */
-.tile-vignette {
-  box-shadow: inset 0 30px 60px -30px rgba(255, 255, 255, 0.25),
-    inset 0 -40px 80px -30px rgba(0, 0, 0, 0.35);
-}
-
-/* Cut-corner (fashion notch) — top-right bevel */
-.notch-tr {
-  clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%);
-}
-/* Cut-corner — bottom-left bevel */
-.notch-bl {
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 22px 100%, 0 calc(100% - 22px));
-}
-
-/* Typography helpers live in @layer components so Tailwind utilities
-   (leading-*, tracking-*, block, text-*) placed on the same element win. */
 @layer components {
-  /* Graffiti spray tag */
-  .tag {
-    font-family: var(--font-tag);
-    color: var(--color-frost-white);
-    opacity: 0.10;
-    filter: blur(0.4px);
-    letter-spacing: -0.02em;
-    user-select: none;
+  /* Film grain — set `color` free, it only uses opacity */
+  .grain::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 90;
     pointer-events: none;
-    text-transform: none;
+    opacity: 0.045;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  /* Big display heading defaults (Oswald is already condensed — keep tracking near 0) */
-  .display {
-    font-family: var(--font-display);
-    font-weight: 700;
-    letter-spacing: -0.01em;
-    line-height: 0.95;
-    text-transform: uppercase;
-  }
-
-  .mono {
-    font-family: var(--font-mono);
-  }
-
-  /* Bracketed technical label helper (solid frost-white so ~10px text clears AA) */
-  .tech-label {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--color-frost-white);
-  }
-
-  /* Text mask-reveal wrapper (used with Framer variants) */
+  /* Clipping wrapper for line-by-line text reveals */
   .reveal-mask {
     overflow: hidden;
-    display: inline-block;
-    vertical-align: bottom;
   }
-}
 
-/* ============ SCROLLBAR ============ */
-::-webkit-scrollbar {
-  width: 9px;
-}
-::-webkit-scrollbar-track {
-  background: var(--color-frost-deep);
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(242, 245, 246, 0.35);
-  border-radius: 4px;
-  border: 2px solid var(--color-frost-deep);
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-frost-white);
+  /* Hides scrollbar but keeps scrolling (horizontal rails) */
+  .no-bar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-bar::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 /* ============ REDUCED MOTION ============ */
