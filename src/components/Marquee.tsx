@@ -5,9 +5,11 @@ interface MarqueeProps {
   className?: string;
 }
 
-/** Infinite horizontal marquee. Pauses on hover. Duplicated track for seamless loop. */
+/** Infinite horizontal marquee. Pauses on hover.
+ * Items are repeated an even number of times so one half of the track is wider
+ * than any viewport — the -50% translate then loops seamlessly with no gap. */
 export default function Marquee({ items, reverse = false, separator = '◆', className = '' }: MarqueeProps) {
-  const track = [...items, ...items];
+  const track = [...items, ...items, ...items, ...items, ...items, ...items];
   return (
     <div className={`overflow-hidden select-none ${className}`} aria-hidden="true">
       <div className={`flex w-max ${reverse ? 'animate-marquee-rev' : 'animate-marquee'} hover:[animation-play-state:paused]`}>

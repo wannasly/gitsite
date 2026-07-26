@@ -8,8 +8,8 @@ export default {
     extend: {
       colors: {
         frost: {
-          base: '#6f8291',
-          deep: '#566876',
+          base: '#59697a',
+          deep: '#46545f',
           mist: '#8598a6',
           card: '#aebdc8',
           snow: '#dde2e4',
@@ -19,8 +19,9 @@ export default {
         },
       },
       fontFamily: {
-        display: ['Archivo', 'sans-serif'],
-        mono: ['Space Mono', 'monospace'],
+        display: ['Oswald', 'Inter', 'sans-serif'],
+        sans: ['Inter', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
         tag: ['Permanent Marker', 'cursive'],
       },
     },

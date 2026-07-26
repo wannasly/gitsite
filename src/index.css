@@ -1,20 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&family=Permanent+Marker&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Permanent+Marker&display=swap');
 
 @import "tailwindcss";
 
 @theme {
-  /* ---- FRZN glacial palette (cold steel blue, monochrome) ---- */
-  --color-frost-base: #6f8291;   /* main steel blue background */
-  --color-frost-deep: #566876;   /* darker panel */
-  --color-frost-mist: #8598a6;   /* lighter top band */
+  /* ---- FRZN glacial palette (cold steel blue, monochrome) ----
+     base/deep darkened so solid frost-white body text clears WCAG AA 4.5:1 */
+  --color-frost-base: #59697a;   /* main steel blue background (white text ~5.2:1) */
+  --color-frost-deep: #46545f;   /* darker panel / sections */
+  --color-frost-mist: #8598a6;   /* lighter band — decorative / mountain sky only */
   --color-frost-card: #aebdc8;   /* light blue product tile */
   --color-frost-snow: #dde2e4;   /* near-white tile */
   --color-frost-ink: #12191f;    /* near-black slate (text on light) */
   --color-frost-white: #f2f5f6;  /* primary text */
   --color-frost-line: rgba(242, 245, 246, 0.18);
 
-  --font-display: 'Archivo', ui-sans-serif, system-ui, sans-serif;
-  --font-mono: 'Space Mono', ui-monospace, monospace;
+  --font-display: 'Oswald', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   --font-tag: 'Permanent Marker', cursive;
 
   --animate-marquee: marquee 34s linear infinite;
@@ -43,7 +45,7 @@
   body {
     background-color: var(--color-frost-base);
     color: var(--color-frost-white);
-    font-family: var(--font-display);
+    font-family: var(--font-sans);
     margin: 0;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
@@ -114,45 +116,49 @@
   clip-path: polygon(0 0, 100% 0, 100% 100%, 22px 100%, 0 calc(100% - 22px));
 }
 
-/* Graffiti spray tag */
-.tag {
-  font-family: var(--font-tag);
-  color: var(--color-frost-white);
-  opacity: 0.10;
-  filter: blur(0.4px);
-  letter-spacing: -0.02em;
-  user-select: none;
-  pointer-events: none;
-  text-transform: none;
-}
+/* Typography helpers live in @layer components so Tailwind utilities
+   (leading-*, tracking-*, block, text-*) placed on the same element win. */
+@layer components {
+  /* Graffiti spray tag */
+  .tag {
+    font-family: var(--font-tag);
+    color: var(--color-frost-white);
+    opacity: 0.10;
+    filter: blur(0.4px);
+    letter-spacing: -0.02em;
+    user-select: none;
+    pointer-events: none;
+    text-transform: none;
+  }
 
-/* Big display heading defaults */
-.display {
-  font-family: var(--font-display);
-  font-weight: 900;
-  letter-spacing: -0.03em;
-  line-height: 0.92;
-  text-transform: uppercase;
-}
+  /* Big display heading defaults (Oswald is already condensed — keep tracking near 0) */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
 
-.mono {
-  font-family: var(--font-mono);
-}
+  .mono {
+    font-family: var(--font-mono);
+  }
 
-/* Bracketed technical label helper */
-.tech-label {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(242, 245, 246, 0.62);
-}
+  /* Bracketed technical label helper (solid frost-white so ~10px text clears AA) */
+  .tech-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-frost-white);
+  }
 
-/* Text mask-reveal wrapper (used with Framer variants) */
-.reveal-mask {
-  overflow: hidden;
-  display: inline-block;
-  vertical-align: bottom;
+  /* Text mask-reveal wrapper (used with Framer variants) */
+  .reveal-mask {
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: bottom;
+  }
 }
 
 /* ============ SCROLLBAR ============ */
