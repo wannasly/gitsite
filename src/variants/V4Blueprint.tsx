@@ -688,7 +688,7 @@ export default function V4Blueprint({ lang, setLang }: VariantProps) {
                 <button
                   type="button"
                   onClick={() => setMenuOpen(true)}
-                  aria-label="Menu"
+                  aria-label={t.a11y.menu}
                   aria-expanded={menuOpen}
                   className={`lg:hidden w-11 h-11 grid place-items-center rounded-[16px] ${RAISED} ${PRESS} ${FOCUS} cursor-pointer transition-all`}
                 >
@@ -734,7 +734,7 @@ export default function V4Blueprint({ lang, setLang }: VariantProps) {
                   type="button"
                   autoFocus
                   onClick={() => setMenuOpen(false)}
-                  aria-label="Close"
+                  aria-label={t.a11y.close}
                   className={`w-11 h-11 grid place-items-center rounded-[16px] ${RAISED} ${PRESS} ${FOCUS} cursor-pointer`}
                 >
                   <X className="w-[18px] h-[18px] text-[#161A1F]" strokeWidth={1.8} />

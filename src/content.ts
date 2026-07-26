@@ -78,6 +78,8 @@ export interface Content {
   };
   footer: { rights: string; built: string };
   marquee: string[];
+  /** Labels for icon-only controls — never rendered visually, only announced. */
+  a11y: { menu: string; close: string };
 }
 
 const TOOLS = ['Kali Linux', 'Docker', 'Git & CI/CD', 'TailwindCSS', 'Ethers.js / Web3.py', 'AI Agents API', 'FastAPI'];
@@ -181,6 +183,7 @@ export const CONTENT: Record<Lang, Content> = {
       built: 'React · Vite · Tailwind · Framer Motion',
     },
     marquee: ['Автоматизация', 'Web3', 'Парсеры', 'ИИ-агенты', 'Безопасность', 'Смарт-контракты'],
+    a11y: { menu: 'Открыть меню', close: 'Закрыть меню' },
   },
 
   en: {
@@ -281,5 +284,6 @@ export const CONTENT: Record<Lang, Content> = {
       built: 'React · Vite · Tailwind · Framer Motion',
     },
     marquee: ['Automation', 'Web3', 'Parsers', 'AI agents', 'Security', 'Smart contracts'],
+    a11y: { menu: 'Open menu', close: 'Close menu' },
   },
 };

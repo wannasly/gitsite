@@ -316,7 +316,7 @@ export default function V1Lab({ lang, setLang }: VariantProps) {
             <button
               type="button"
               onClick={() => setMenuOpen(true)}
-              aria-label="Menu"
+              aria-label={t.a11y.menu}
               aria-expanded={menuOpen}
               className="grid h-11 w-11 cursor-pointer place-items-center bg-[#0A0A0A] text-[#F2F1EE] lg:hidden"
             >
@@ -342,7 +342,7 @@ export default function V1Lab({ lang, setLang }: VariantProps) {
             <button
               type="button"
               onClick={() => setMenuOpen(false)}
-              aria-label="Close"
+              aria-label={t.a11y.close}
               className="grid h-11 w-11 cursor-pointer place-items-center bg-[#0A0A0A] text-[#F2F1EE]"
             >
               <X className="h-5 w-5" strokeWidth={2} />
